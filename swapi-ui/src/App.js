@@ -19,8 +19,8 @@ const _App = ({ loading, list, getPlanets }) => {
 
       { !loading &&
         <ul className="spacing">
-          { list.map(item =>
-            <li key={item.name}>{ item.name }</li>
+          {list.map(item =>
+            <li key={item.name}>{item.name}</li>
           )}
         </ul>
       }
