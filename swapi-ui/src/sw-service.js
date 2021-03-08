@@ -1,6 +1,8 @@
 import xhr from './xhr';
-const BASE = 'https://swapi.dev/api/';
+import { api } from './utils/constants';
 
-const getPlanets = () => xhr(`${BASE}planets`);
+const url = `${api.url}${api.methods.planets}`;
+
+const getPlanets = () => xhr(url);
 
 export { getPlanets };
