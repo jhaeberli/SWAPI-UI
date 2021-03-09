@@ -1,5 +1,5 @@
-import xhr from './xhr';
-import { api } from './utils/constants';
+import xhr from '../../xhr';
+import { api } from '../../utils/constants';
 
 const url = `${api.url}${api.methods.planets}`;
 
