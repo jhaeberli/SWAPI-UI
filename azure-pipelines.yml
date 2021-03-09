@@ -13,7 +13,7 @@ pool:
 variables:
   directory: swapi-ui
   stage: development
-  serviceConnection: 'jhaeberli'
+  serviceConnection: 'SCjhaeberli'
   appServiceName: swapi-ui
  
 steps:
