@@ -1,4 +1,8 @@
 {
-    "appService.defaultWebAppToDeploy": "/subscriptions/46ccab64-2218-4781-81e2-e7fbfc7e2241/resourceGroups/Default/providers/Microsoft.Web/sites/SWAPI-UI",
-    "appService.deploySubpath": "."
+    "appService.deploySubpath": ".",
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/46ccab64-2218-4781-81e2-e7fbfc7e2241/resourceGroups/RGjhaeberli/providers/Microsoft.Web/sites/SWAPI-UI"
 }
