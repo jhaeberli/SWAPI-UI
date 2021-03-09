@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './App.css';
 import { GET_PLANETS } from './action-creators';
+import { Planets } from './components/planetsView/Planets';
 
 const _App = ({ loading, list, getPlanets }) => {
 
@@ -23,6 +24,10 @@ const _App = ({ loading, list, getPlanets }) => {
             <li key={item.name}>{item.name}</li>
           )}
         </ul>
+      }
+
+      { !loading &&
+        <Planets list={list} />
       }
     </div>
   );
