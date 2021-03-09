@@ -13,7 +13,7 @@ pool:
 variables:
   directory: swapi-ui
   stage: development
-  serviceConnection: 'Free Trial(46ccab64-2218-4781-81e2-e7fbfc7e2241)'
+  serviceConnection: 'github.com_jhaeberli'
   appServiceName: swapi-ui
  
 steps:
