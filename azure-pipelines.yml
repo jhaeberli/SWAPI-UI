@@ -7,7 +7,7 @@ trigger:
 - main
  
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'linux-latest'
 
 # Set variables
 variables:
