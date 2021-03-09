@@ -15,3 +15,5 @@ export default async function getPlanets(params) {
         return [];
     }
 }
+
+export { getPlanets }

@@ -1,6 +1,5 @@
-import { getPlanets } from './sw-service';
-//import { getPlanets } from './components/services/swapiApiService';
-
+//import { getPlanets } from './components/services/xhrService';
+import { getPlanets } from './components/services/axiosService';
 
 export function GET_PLANETS() {
   return dispatch => {
