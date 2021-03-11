@@ -1,78 +1,110 @@
+import React from 'react';
 import _ from 'lodash'
-import React from 'react'
-import { Table } from 'semantic-ui-react'
+import { connect } from 'react-redux';
+import '../../App.css';
+import { Table, Pagination, Button, Container, Loader, Header } from 'semantic-ui-react'
+import { SET_ACTIVE_PAGE, SET_LIST } from '../../action-creators';
 
-const tableData = [
-    { name: 'John', age: 15, gender: 'Male' },
-    { name: 'Amber', age: 40, gender: 'Female' },
-    { name: 'Leslie', age: 25, gender: 'Other' },
-    { name: 'Ben', age: 70, gender: 'Male' },
-]
+const Planets = ({ setActivePage, setList, loading, list, activePage, column, direction }) => {
 
-function exampleReducer(state, action) {
-    switch (action.type) {
-        case 'CHANGE_SORT':
-            if (state.column === action.column) {
-                return {
-                    ...state,
-                    data: state.data.slice().reverse(),
-                    direction:
-                        state.direction === 'ascending' ? 'descending' : 'ascending',
-                }
-            }
+    const onChange = (e, pageInfo) => {
+        setActivePage(pageInfo.activePage);
+    };
 
-            return {
-                column: action.column,
-                data: _.sortBy(state.data, [action.column]),
-                direction: 'ascending',
-            }
-        default:
-            throw new Error()
+    const sortTable = (columna) => {
+        if (column === columna) {
+            setList(list.slice().reverse(), columna, direction === 'ascending' ? 'descending' : 'ascending');
+        }
+        else {
+            setList(_.sortBy(list, columna), columna, 'ascending');
+        }
     }
-}
-
-export const Planets = (list) => {
-
-    const [state, dispatch] = React.useReducer(exampleReducer, {
-        column: null,
-        data: list,
-        direction: null,
-    })
-    const { column, data, direction } = state
 
     return (
-        <Table sortable celled fixed>
-            <Table.Header>
-                <Table.Row>
-                    <Table.HeaderCell
-                        sorted={column === 'name' ? direction : null}
-                        onClick={() => dispatch({ type: 'CHANGE_SORT', column: 'name' })}
-                    >
-                        Name
-                    </Table.HeaderCell>
-                    <Table.HeaderCell
-                        sorted={column === 'age' ? direction : null}
-                        onClick={() => dispatch({ type: 'CHANGE_SORT', column: 'age' })}
-                    >
-                        Age
-                    </Table.HeaderCell>
-                    <Table.HeaderCell
-                        sorted={column === 'gender' ? direction : null}
-                        onClick={() => dispatch({ type: 'CHANGE_SORT', column: 'gender' })}
-                    >
-                        Gender
-                    </Table.HeaderCell>
-                </Table.Row>
-            </Table.Header>
-            <Table.Body>
-                {data.map(({ age, gender, name }) => (
-                    <Table.Row key={name}>
-                        <Table.Cell>{name}</Table.Cell>
-                        <Table.Cell>{age}</Table.Cell>
-                        <Table.Cell>{gender}</Table.Cell>
-                    </Table.Row>
-                ))}
-            </Table.Body>
-        </Table>
-    )
-}
+        <div>
+            <Container className="centered">
+                <div className="spacing">
+                    <Header as='h2'>SWAPI-UI</Header>
+                </div>
+
+                <div className="spacing">
+                    <Header as='h3'>React app based on The Star Wars API</Header>
+                </div>
+
+                <div className="spacing">
+                    <Button primary onClick={() => setActivePage(1)}>Get Planets</Button>
+                </div>
+
+                {loading &&
+                    <div>
+                        <Loader size='massive' active>Loading</Loader>
+                    </div>
+                }
+
+                {!loading &&
+                    <Table sortable celled color={'red'}>
+                        <Table.Header>
+                            <Table.Row>
+                                <Table.HeaderCell
+                                    sorted={column === 'name' ? direction : null}
+                                    onClick={() => sortTable('name')}
+                                >
+                                    Name
+                        </Table.HeaderCell>
+                                <Table.HeaderCell
+                                    sorted={column === 'climate' ? direction : null}
+                                    onClick={() => sortTable('climate')}
+                                >
+                                    Climate
+                        </Table.HeaderCell>
+                                <Table.HeaderCell
+                                    sorted={column === 'population' ? direction : null}
+                                    onClick={() => sortTable('population')}
+                                >
+                                    Population
+                        </Table.HeaderCell>
+                            </Table.Row>
+                        </Table.Header>
+                        <Table.Body>
+                            {list.map(({ climate, population, name }) => (
+                                <Table.Row key={name}>
+                                    <Table.Cell>{name}</Table.Cell>
+                                    <Table.Cell>{climate}</Table.Cell>
+                                    <Table.Cell>{population}</Table.Cell>
+                                </Table.Row>
+                            ))}
+                        </Table.Body>
+
+                        <Pagination
+                            totalPages={6}
+                            activePage={activePage}
+                            onPageChange={onChange}
+                        />
+                    </Table>
+                }
+            </Container>
+        </div>
+    );
+};
+
+const mapStateToProps = state => {
+    return {
+        loading: state.loading,
+        list: state.list,
+        activePage: state.activePage,
+        column: state.column,
+        direction: state.direction
+    }
+};
+
+const mapDispatchToProps = {
+    setActivePage: SET_ACTIVE_PAGE,
+    setList: SET_LIST
+};
+
+export { Planets };
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Planets);
