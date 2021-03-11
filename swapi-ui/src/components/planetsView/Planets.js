@@ -79,6 +79,8 @@ const Planets = ({ setActivePage, setList, loading, list, activePage, column, di
                             totalPages={6}
                             activePage={activePage}
                             onPageChange={onChange}
+                            prevItem={null}
+                            nextItem={null}
                         />
                     </Table>
                 }
