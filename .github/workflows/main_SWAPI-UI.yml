@@ -32,5 +32,5 @@ jobs:
       with:
         app-name: 'SWAPI-UI'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_d2882c70a8194c27b108365ca868054d }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_0f21a03c19e440a08e14febdcf531317 }}
         package: .
