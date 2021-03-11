@@ -14,7 +14,6 @@ const reducer = (state, action) => {
     case 'SET_LOADING':
       return Object.assign({}, state, {
         loading: action.value,
-        //list: [] ??
       })
 
     case 'SET_LIST':
