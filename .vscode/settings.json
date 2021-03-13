@@ -1,5 +1,5 @@
 {
-    "appService.deploySubpath": ".",
+    "appService.deploySubpath": "/swapi-ui/build",
     "appService.zipIgnorePattern": [
         "node_modules{,/**}",
         ".vscode{,/**}"
