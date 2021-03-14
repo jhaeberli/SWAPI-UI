@@ -6,11 +6,13 @@ const initialState = {
   list: [],
   activePage: 0,
   direction: 'ascending',
-  column: 'name'
+  column: 'name',
+  customError: null
 };
 
 const reducer = (state, action) => {
-  switch(action.type) {
+  switch (action.type) {
+
     case 'SET_LOADING':
       return Object.assign({}, state, {
         loading: action.value,
@@ -28,6 +30,13 @@ const reducer = (state, action) => {
       return Object.assign({}, state, {
         loading: true,
         activePage: action.value
+      })
+
+    case 'SET_ERROR':
+      return Object.assign({}, state, {
+        loading: false,
+        list: [],
+        customError: action.value.customError
       })
 
     default:

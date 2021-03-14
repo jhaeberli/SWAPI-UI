@@ -1,22 +1,32 @@
 import React from 'react';
-import _ from 'lodash'
 import { connect } from 'react-redux';
+import _ from 'lodash'
 import '../../App.css';
-import { Table, Pagination, Button, Container, Loader, Header } from 'semantic-ui-react'
+import { Table, Pagination, Button, Container, Loader, Header, Icon } from 'semantic-ui-react'
 import { SET_ACTIVE_PAGE, SET_LIST } from '../../action-creators';
 
-const Planets = ({ setActivePage, setList, loading, list, activePage, column, direction }) => {
+const Planets = ({ setActivePage, setList, loading, list, activePage, column, direction, customError }) => {
 
     const onChange = (e, pageInfo) => {
-        setActivePage(pageInfo.activePage);
+        try {
+            setActivePage(pageInfo.activePage);
+        }
+        catch (error) {
+            console.log('Error while changing to another page.', error);
+        }
     };
 
     const sortTable = (columna) => {
-        if (column === columna) {
-            setList(list.slice().reverse(), columna, direction === 'ascending' ? 'descending' : 'ascending');
+        try {
+            if (column === columna) {
+                setList(list.slice().reverse(), columna, direction === 'ascending' ? 'descending' : 'ascending');
+            }
+            else {
+                setList(_.sortBy(list, columna), columna, 'ascending');
+            }
         }
-        else {
-            setList(_.sortBy(list, columna), columna, 'ascending');
+        catch (error) {
+            console.log('Erorr while sorting table.', error);
         }
     }
 
@@ -35,13 +45,19 @@ const Planets = ({ setActivePage, setList, loading, list, activePage, column, di
                     <Button primary onClick={() => setActivePage(1)}>Get Planets</Button>
                 </div>
 
-                {loading &&
+                {loading && !customError &&
                     <div>
                         <Loader size='massive' active>Loading</Loader>
                     </div>
                 }
 
-                {!loading &&
+                {customError &&
+                    <div>
+                        <Icon color='red' name='bug' />There was an error. See console for details.
+                    </div>
+                }
+
+                {!loading && !customError &&
                     <Table sortable celled color={'red'}>
                         <Table.Header>
                             <Table.Row>
@@ -95,7 +111,8 @@ const mapStateToProps = state => {
         list: state.list,
         activePage: state.activePage,
         column: state.column,
-        direction: state.direction
+        direction: state.direction,
+        customError: state.customError
     }
 };
 
