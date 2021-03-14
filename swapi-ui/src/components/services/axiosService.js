@@ -7,11 +7,11 @@ export default async function getPlanets(activePage) {
 
     try {
         const response = await axios.get(url);
-        return response.status === 400 ? [] : response.data;
+        return response.status === 200 ? response.data : [];
     }
     catch (error) {
-        console.log(error);
-        return [];
+        console.log('Axios - Error getting Planets: \n', error);
+        throw error;
     }
 }
 
