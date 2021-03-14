@@ -4,3 +4,9 @@ export const api = {
         planets: '/planets/?page=',
     }
 };
+
+
+export const actionTypes = {
+    SET_LOADING: "SET_LOADING",
+    SET_LIST: "SET_LIST"
+}
